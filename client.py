@@ -1,14 +1,14 @@
 import pygame
 
-width = 500
-height = 500
-win = pygame.display.set_mode((width, height))
+screenWidth = 500
+screenHeight = 500
+win = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Client")
 
 clientNumber = 0.0
 
 
-class Player():
+class Player:
     def __init__(self, x, y, width, height, color):
         self.x = x
         self.y = y
@@ -18,8 +18,8 @@ class Player():
         self.rect = (x, y, width, height)
         self.vel = 3
 
-    def draw(self, win):
-        pygame.draw.rect(win, self.color, self.rect)
+    def draw(self, window):
+        pygame.draw.rect(window, self.color, self.rect)
 
     def move(self):
         keys = pygame.key.get_pressed()
@@ -36,9 +36,9 @@ class Player():
         self.rect = (self.x, self.y, self.width, self.height)
 
 
-def redrawWindow(win, player):
+def redrawWindow(window, player):
     win.fill((255, 255, 255))
-    player.draw(win)
+    player.draw(window)
     pygame.display.update()
 
 
