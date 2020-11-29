@@ -1,61 +1,37 @@
 import pygame
+from network import Network
+from player import Player
 
 screenWidth = 500
 screenHeight = 500
 win = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Client")
 
-clientNumber = 0.0
 
-
-class Player:
-    def __init__(self, x, y, width, height, color):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.color = color
-        self.rect = (x, y, width, height)
-        self.vel = 3
-
-    def draw(self, window):
-        pygame.draw.rect(window, self.color, self.rect)
-
-    def move(self):
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LEFT]:
-            self.x -= self.vel
-        if keys[pygame.K_RIGHT]:
-            self.x += self.vel
-        if keys[pygame.K_UP]:
-            self.y -= self.vel
-        if keys[pygame.K_DOWN]:
-            self.y += self.vel
-
-        self.rect = (self.x, self.y, self.width, self.height)
-
-
-def redrawWindow(window, player):
+def redrawWindow(win, player, player2):
     win.fill((255, 255, 255))
-    player.draw(window)
+    player.draw(win)
+    player2.draw(win)
     pygame.display.update()
 
 
 def main():
     run = True
-    p = Player(50, 50, 100, 100, (0, 255, 0))
+    n = Network()
+    p = n.getP()
     clock = pygame.time.Clock()
 
     while run:
         clock.tick(60)
+        p2 = n.send(p)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
 
         p.move()
-        redrawWindow(win, p)
+        redrawWindow(win, p, p2)
 
 
 main()
